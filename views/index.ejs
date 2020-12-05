@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miguel's Car Quiz</title>
+    <link rel="stylesheet" href= C:\Users\andra\Desktop\Andrade_quiz5\public\css\bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+</head>
+
+<body>
+    <h1>Miguel's Car Quiz</h1>
+
+
+    <%- include("_header") -%>
+
+<h2> Find Cars</h2>
+
+<h4>Total number of records in the database:</h4>
+
+<form action="/" method="POST">
+    <table>
+        <tr>
+            <td><label for="carvin">Car Vin</label>:</td>
+            <td><input type="number" name="carvin" id="carvin" value="<%= car.carvin %>" /></td>
+            <td>(equal)</td>
+        </tr>
+        <tr>
+            <td><label for="carmake">Car Make</label>:</td>
+            <td><input type="text" name="carmake" id="carmake" value="<%= car.carmake %>" /></td>
+            <td>(starts with)</td>
+        </tr>
+        <tr>
+            <td><label for="carmodel">Car Model</label>:</td>
+            <td><input type="text" name="carmodel" id="carmodel" value="<%= car.carmodel %>" /></td>
+            <td>(starts with)</td>
+        </tr>
+        <tr>
+            <td><label for="carmileage">Car Mileage</label>:</td>
+            <td><input type="text" name="carmileage" id="carmileage" value="<%= car.carmileage %>" /></td>
+            <td>(greater than or equal)</td>
+        </tr>
+        <tr>
+            <td span="2">
+                <input type="submit" value="Find" />
+                <input type="reset" value="Reset" />
+            </td>
+        </tr>
+    </table>
+</form>
+
+<!-- Omitted Error Checking / Needs to be added -->
+<% if (type === "post") { %>
+    <% if (result.result.length === 0) { %>
+        <h3>No records found!</h3>
+    <% } else { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>Carvin</th>
+                    <th>Carmake</th>
+                    <th>Carmodel</th>
+                    <th>Carmileage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% result.result.forEach(car => { %> 
+                    <tr>
+                        <td><%= car.carvin %></td>
+                        <td><%= car.carmake %></td>
+                        <td><%= car.carmodel %></td>
+                        <td><%= car.carmileage %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+
+        </table>
+    <% } %>
+<% } %>
+
+<%- include("_footer") -%>   
+</body>
+
+</html>
+
+<%- include("_header") -%>
+
+<!-- <h1>Node PostgreSQL Application</h1>
+
+<h2>Choose a task from the top navigation bar</h2> -->
+
+<%- include("_footer") -%>
