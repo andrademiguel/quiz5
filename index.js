@@ -29,12 +29,19 @@ app.use(express.static("public"));
 app.listen(process.env.PORT || 3000, () => {
     console.log("Server started (http://localhost:3000/) !");
 });
-
-
-
-// Setup routes
+//Setup routes
 app.get("/", (req, res) => {
     res.render("index");
+});
+
+
+app.get("/", async (req, res) => {
+    // Omitted validation check
+    const totRecs = await dblib.getTotalRecords();
+    res.render("index", {
+        type: "get",
+        totRecs: totRecs.totRecords
+    });
 });
 
 app.post("/", async (req, res) => {
@@ -63,9 +70,9 @@ app.post("/", async (req, res) => {
 });
 
 app.get("/", async (req, res) => {
-  
+
     const totRecs = await dblib.getTotalRecords();
-   
+
     const car = {
         carvin: "",
         carmake: "",
@@ -77,4 +84,11 @@ app.get("/", async (req, res) => {
         totRecs: totRecs.totRecords,
         car: car
     });
+});
+
+app.post("/", upload.array(), async (req, res) => {
+    dblib.findProducts(req.body)
+        .then(result => res.send(result))
+        .catch(err => res.send({ trans: "Error", result: err.message }));
+
 });
