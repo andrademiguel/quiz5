@@ -8,6 +8,48 @@ const pool = new Pool({
     }
 });
 
+const getTotalRecords = () => {
+    sql = "SELECT COUNT(*) FROM car";
+    return pool.query(sql)
+        .then(result => {
+            return {
+                msg: "success",
+                totRecords: result.rows[0].count
+            }
+        })
+        .catch(err => {
+            return {
+                msg: `Error ${err.message}`
+            }
+        });
+};
+
+const insertCar = (car) => {
+
+    if (car instanceof Array) {
+        params = car;
+    } else {
+        params = Object.values(car);
+    };
+
+    const sql = `INSERT INTO car (carvin, carmake, carmodel, carmileage)
+                 VALUES ($1, $2, $3, $4)`;
+
+    return pool.query(sql, params)
+        .then(res => {
+            return {
+                trans: "success", 
+                msg: `car id ${params[0]} successfully inserted`
+            };
+        })
+        .catch(err => {
+            return {
+                trans: "fail", 
+                msg: `Error on insert of car id ${params[0]}.  ${err.message}`
+            };
+        });
+};
+
 const findCar = (car) => {
     // Will build query based on data provided from the form
     //  Use parameters to avoid sql injection

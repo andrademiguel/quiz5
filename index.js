@@ -23,6 +23,8 @@ app.use((req, res, next) => {
     next();
 });
 
+
+
 // Application folders
 app.use(express.static("public"));
 
