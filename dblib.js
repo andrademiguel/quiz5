@@ -1,4 +1,14 @@
-const findProducts = (car) => {
+require("dotenv").config();
+
+const { Pool } = require('pg');
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
+
+const findCar = (car) => {
     // Will build query based on data provided from the form
     //  Use parameters to avoid sql injection
 
@@ -48,3 +58,7 @@ const findProducts = (car) => {
             }
         });
 };
+
+module.exports.findCar = findCar;
+module.exports.insertCar = insertCar;
+module.exports.getTotalRecords = getTotalRecords;
